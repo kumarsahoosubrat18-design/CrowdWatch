@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>H7 — Campus Crowd Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { --paper:#ece8df; --ink:#14110f; --mute:#6f6a60; --line:#cfc9bb; --sig:#ff4d1c; --ok:#1f9d6b; --warn:#e8a317; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { background:var(--paper); }
+  body { color:var(--ink); font-family:"DM Sans",sans-serif; font-size:17px; line-height:1.55; overflow-x:hidden; cursor:none; }
+  a, button, input { cursor:none; }
+  .mono { font-family:"IBM Plex Mono",monospace; font-size:.74rem; letter-spacing:.06em; text-transform:uppercase; }
+  .serif { font-family:"Instrument Serif",serif; font-weight:400; }
+  #cur { position:fixed; top:0; left:0; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%; background:var(--sig);
+         pointer-events:none; z-index:100; mix-blend-mode:multiply; transition:width .25s,height .25s,margin .25s; }
+  #cur.big { width:64px; height:64px; margin:-32px 0 0 -32px; }
+  body::after { content:""; position:fixed; inset:0; pointer-events:none; z-index:90; opacity:.07;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:space-between; align-items:center; padding:20px 4vw; mix-blend-mode:difference; color:#fff; }
+  nav a { color:inherit; text-decoration:none; margin-left:28px; }
+  .hero { min-height:100vh; padding:120px 4vw 40px; display:grid; grid-template-columns:1.05fr 1fr; gap:4vw; align-items:end; }
+  h1 { font-size:clamp(3.4rem,8.4vw,8.2rem); line-height:.9; letter-spacing:-.02em; }
+  h1 em { color:var(--sig); }
+  .line { display:block; overflow:hidden; } .line > span { display:block; }
+  .lede { max-width:420px; margin-top:28px; color:var(--mute); }
+  .feed { position:relative; aspect-ratio:4/5; background:#14110f; border-radius:4px; overflow:hidden; }
+  .feed img, .feed canvas { position:absolute; inset:0; width:100%; height:100%; }
+  .feed img { object-fit:cover; filter:grayscale(1) contrast(1.15); opacity:.45; }
+  .hud { position:absolute; left:14px; right:14px; bottom:14px; display:flex; justify-content:space-between; color:#fff; z-index:2; }
+  .hud b { display:block; font-family:"Instrument Serif",serif; font-weight:400; font-size:2.2rem; line-height:1; text-transform:none; letter-spacing:0; }
+  .rec { position:absolute; top:14px; left:14px; color:#fff; z-index:2; }
+  .rec::before { content:""; display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--sig); margin-right:8px; animation:blink 1.2s infinite; }
+  @keyframes blink { 50% { opacity:.2; } }
+  .hint { position:absolute; top:34px; left:14px; color:#fff; opacity:.7; z-index:2; }
+  .marq { border-block:1px solid var(--ink); overflow:hidden; white-space:nowrap; padding:14px 0; margin-top:6vh; }
+  .marq div { display:inline-block; animation:mq 40s linear infinite; }
+  .marq span { margin-right:48px; } .marq i { color:var(--sig); font-style:normal; margin-right:48px; }
+  @keyframes mq { to { transform:translateX(-50%); } }
+  section.s { padding:16vh 4vw; }
+  h2 { font-size:clamp(2.6rem,6vw,5.6rem); line-height:.95; letter-spacing:-.015em; max-width:14ch; }
+  h2 em { color:var(--sig); }
+  .cols { display:grid; grid-template-columns:1fr 1.2fr; gap:5vw; margin-top:7vh; align-items:start; }
+  .cal { background:var(--ink); color:var(--paper); border-radius:4px; padding:28px; }
+  .cal canvas { width:100%; aspect-ratio:1.4; display:block; background:#1d1915; border-radius:2px; }
+  .read { display:flex; justify-content:space-between; align-items:flex-end; margin:22px 0 10px; }
+  .read b { display:block; font-family:"Instrument Serif",serif; font-weight:400; font-size:4.4rem; line-height:.9; text-transform:none; letter-spacing:0; }
+  #stat { padding:6px 12px; border-radius:99px; color:#14110f; }
+  input[type=range] { width:100%; accent-color:var(--sig); }
+  .rows { margin-top:8vh; border-top:1px solid var(--ink); }
+  .row { display:grid; grid-template-columns:90px 1fr 1.2fr; gap:2vw; padding:34px 0; border-bottom:1px solid var(--ink); align-items:baseline; transition:padding .35s, color .35s; }
+  .row:hover { padding-left:2vw; color:var(--sig); }
+  .row h3 { font-size:clamp(1.8rem,3.4vw,3rem); line-height:1; font-weight:400; }
+  .row p { color:var(--mute); }
+  .float { position:fixed; top:0; left:0; width:280px; aspect-ratio:4/5; pointer-events:none; z-index:60; overflow:hidden; border-radius:3px;
+           opacity:0; scale:.8; transition:opacity .25s, scale .25s; background:var(--ink); }
+  .float.on { opacity:1; scale:1; }
+  .float img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .2s; }
+  .float img.on { opacity:1; }
+  .float .ph { position:absolute; inset:0; display:grid; place-items:center; color:#fff; background:repeating-linear-gradient(45deg,#2a2520,#2a2520 8px,#14110f 8px,#14110f 16px); }
+  .chart { margin-top:7vh; border:1px solid var(--ink); border-radius:4px; background:#f4f1ea; padding:16px; }
+  svg text { font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--mute); }
+  .cta { padding:18vh 4vw 8vh; text-align:center; background:var(--ink); color:var(--paper); }
+  .cta a { display:block; font-family:"Instrument Serif",serif; font-size:clamp(3.4rem,13vw,13rem); line-height:.9; color:inherit; text-decoration:none; transition:color .3s, letter-spacing .5s; }
+  .cta a:hover { color:var(--sig); letter-spacing:.01em; }
+  .cta .mono { margin-top:10vh; display:flex; justify-content:space-between; color:#9a9486; }
+  @media (max-width:860px){ .hero,.cols{ grid-template-columns:1fr; } .row{ grid-template-columns:50px 1fr; } .row p{ grid-column:2; } .float{ display:none; } body,a,button,input{cursor:auto;} #cur{display:none;} }
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div class="float" id="float"><div class="ph mono">add images/f1.jpg</div><img alt="" /></div>
+
+<nav class="mono">
+  <span>H7 / Campus Crowd Monitor</span>
+  <span><a href="#how">Calibrate</a><a href="#features">Features</a><a href="code1.html#dashboard">Dashboard ↗</a></span>
+</nav>
+
+<header class="hero">
+  <div>
+    <span class="mono" style="color:var(--mute)">Proactive crowd-density alerts — 2026</span>
+    <h1 class="serif" style="margin-top:22px">
+      <span class="line"><span>Know the crowd</span></span>
+      <span class="line"><span>before it <em>knows</em></span></span>
+      <span class="line"><span>you.</span></span>
+    </h1>
+    <p class="lede">Most camera systems tell you about a crush after it happens. H7 watches density, projects it five minutes ahead and raises a pre-alert while your stewards can still move.</p>
+  </div>
+  <div class="feed" id="feed">
+    <img src="images/hero.jpg" alt="" onerror="this.remove()" />
+    <canvas id="hc"></canvas>
+    <span class="rec mono">Rec · Main stage gate A</span>
+    <span class="hint mono">Move your cursor in here — you are the surge</span>
+    <div class="hud mono">
+      <div>In zone<b id="hCount">0</b></div>
+      <div>Density p/m²<b id="hDens">0.00</b></div>
+      <div style="text-align:right">Status<b id="hStat">Nominal</b></div>
+    </div>
+  </div>
+</header>
+
+<div class="marq mono"><div id="mq"></div></div>
+
+<section class="s" id="how">
+  <h2 class="serif">Pixels become <em>square metres.</em></h2>
+  <div class="cols">
+    <p style="color:var(--mute); max-width:38ch">Drag four corners over a camera view and the system maps it to real ground area. Same 68 people, different zone size. Try it: shrink the area and watch density cross from comfortable to dangerous.</p>
+    <div class="cal">
+      <canvas id="cc" width="700" height="500"></canvas>
+      <div class="read">
+        <div class="mono" style="opacity:.6">Density p/m²<b id="dv">1.51</b></div>
+        <div style="text-align:right"><span class="mono" id="stat">Nominal</span><div class="mono" style="margin-top:10px;opacity:.6">Area <span id="av">45</span> m² · 68 people</div></div>
+      </div>
+      <input id="area" type="range" min="10" max="150" value="45" />
+    </div>
+  </div>
+</section>
+
+<section class="s" id="features" style="padding-top:4vh">
+  <h2 class="serif">Four things it <em>does well.</em></h2>
+  <div class="rows" id="rows">
+    <div class="row" data-img="images/f1.jpg"><span class="mono">01</span><h3 class="serif">Person detection</h3><p>Pretrained YOLOv8 detects people in configured streams. Throughput and count quality depend on hardware, camera angle, lighting, and crowd overlap.</p></div>
+    <div class="row" data-img="images/f2.jpg"><span class="mono">02</span><h3 class="serif">Zone calibration</h3><p>Select a rectangular or polygon region, enter its measured floor area, and view density estimates from detections inside that zone.</p></div>
+    <div class="row" data-img="images/f3.jpg"><span class="mono">03</span><h3 class="serif">Trend forecast</h3><p>Recent counts estimate crowd levels five and ten minutes ahead to support early warnings. Forecasts are estimates, not guarantees.</p></div>
+    <div class="row" data-img="images/f4.jpg"><span class="mono">04</span><h3 class="serif">Volunteer-ready alerts</h3><p>Configure density and safe-count thresholds, then use pre-alerts to prepare a response before crowd levels rise further.</p></div>
+  </div>
+</section>
+
+<section class="s" style="padding-top:4vh">
+  <h2 class="serif">The line <em>bends</em> early.</h2>
+  <div class="chart">
+    <svg viewBox="0 0 900 300" width="100%" id="svg">
+      <rect x="40" y="10" width="850" height="70" fill="#ff4d1c" opacity=".16"/>
+      <rect x="40" y="80" width="850" height="60" fill="#e8a317" opacity=".18"/>
+      <rect x="40" y="140" width="850" height="130" fill="#1f9d6b" opacity=".12"/>
+      <text x="4" y="48">&gt;1.8</text><text x="4" y="114">1.2</text><text x="4" y="206">safe</text>
+      <line x1="640" y1="10" x2="640" y2="270" stroke="#14110f" stroke-dasharray="3 5"/>
+      <text x="648" y="26">NOW</text><text x="820" y="262">+5 MIN</text>
+      <path id="hist" d="M40 230 L110 224 L180 232 L250 214 L320 218 L390 196 L460 190 L530 168 L600 150 L640 138" fill="none" stroke="#14110f" stroke-width="2.5"/>
+      <path id="fore" d="M640 138 L700 112 L760 82 L820 52 L880 24" fill="none" stroke="#ff4d1c" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <circle id="dot" cx="640" cy="138" r="6" fill="#ff4d1c"/>
+      <text x="700" y="140" id="pre" style="fill:#ff4d1c">PRE-ALERT</text>
+    </svg>
+  </div>
+</section>
+
+<footer class="cta">
+  <a href="code1.html#dashboard">Open the<br />dashboard ↗</a>
+  <div class="mono"><span>H7 — Campus Crowd Monitor</span><span>FastAPI · YOLOv8 · MJPEG · Crowd trends</span></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const lenis = new Lenis(); lenis.on("scroll", ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
+
+/* cursor */
+const cur = document.getElementById("cur");
+const cxq = gsap.quickTo(cur, "x", { duration: .25 }), cyq = gsap.quickTo(cur, "y", { duration: .25 });
+const mouse = { x: -999, y: -999 };
+addEventListener("pointermove", e => { cxq(e.clientX); cyq(e.clientY); mouse.x = e.clientX; mouse.y = e.clientY; });
+document.querySelectorAll("a,.row,input").forEach(el => {
+  el.addEventListener("pointerenter", () => cur.classList.add("big"));
+  el.addEventListener("pointerleave", () => cur.classList.remove("big"));
+});
+
+/* marquee */
+const words = ["Pre-alert","Trend forecast","YOLOv8 person detection","Zone calibration","Six camera views","Live MJPEG streams"];
+document.getElementById("mq").innerHTML = (words.map(w => `<span>${w}</span><i>●</i>`).join("")).repeat(4);
+
+/* hero intro */
+gsap.from(".line > span", { yPercent: 110, duration: 1.2, ease: "power4.out", stagger: .12, delay: .2 });
+gsap.from(".lede, .feed", { opacity: 0, y: 40, duration: 1.2, delay: .7, ease: "power3.out", stagger: .15 });
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  gsap.to(".feed", { y: -28, rotateY: -5, rotateX: 2, transformPerspective: 1100, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: .7 } });
+  gsap.utils.toArray(".cal, .chart").forEach((panel, index) => {
+    gsap.fromTo(panel, { y: 36, rotateX: 5, transformPerspective: 1000, transformOrigin: "center top" }, {
+      y: 0, rotateX: 0, ease: "none",
+      scrollTrigger: { trigger: panel, start: "top 88%", end: "top 40%", scrub: .65, refreshPriority: -index }
+    });
+  });
+}
+
+/* HERO LIVE FEED: people wander; cursor pulls them in */
+const hc = document.getElementById("hc"), hx = hc.getContext("2d");
+const feed = document.getElementById("feed");
+let W, H; const dpr = Math.min(devicePixelRatio, 2);
+function size() { W = feed.clientWidth; H = feed.clientHeight; hc.width = W * dpr; hc.height = H * dpr; hx.setTransform(dpr,0,0,dpr,0,0); }
+size(); addEventListener("resize", size);
+const P = Array.from({ length: 90 }, () => ({ x: Math.random(), y: Math.random(), vx: 0, vy: 0, a: Math.random() * 6.28 }));
+const ZONE = { x: .16, y: .22, w: .68, h: .5 }, AREA = 45;
+const hCount = document.getElementById("hCount"), hDens = document.getElementById("hDens"), hStat = document.getElementById("hStat");
+let tick = 0;
+function frame() {
+  const r = feed.getBoundingClientRect();
+  const mxn = (mouse.x - r.left) / r.width, myn = (mouse.y - r.top) / r.height;
+  const near = mxn > 0 && mxn < 1 && myn > 0 && myn < 1;
+  hx.clearRect(0, 0, W, H);
+  hx.strokeStyle = "rgba(255,255,255,.07)"; hx.lineWidth = 1;
+  for (let i = -8; i <= 8; i++) { hx.beginPath(); hx.moveTo(W/2 + i * 12, H*.1); hx.lineTo(W/2 + i * W/9, H); hx.stroke(); }
+  for (let i = 0; i < 10; i++) { const y = H*.1 + Math.pow(i/9, 1.8) * H*.9; hx.beginPath(); hx.moveTo(0,y); hx.lineTo(W,y); hx.stroke(); }
+  let inside = 0;
+  for (const p of P) {
+    p.a += (Math.random() - .5) * .4;
+    p.vx += Math.cos(p.a) * .00012; p.vy += Math.sin(p.a) * .00012;
+    if (near) { const dx = mxn - p.x, dy = myn - p.y, d = Math.hypot(dx, dy) + .05; p.vx += dx / d * .00016; p.vy += dy / d * .00016; }
+    p.vx *= .94; p.vy *= .94; p.x += p.vx; p.y += p.vy;
+    p.x = Math.min(1, Math.max(0, p.x)); p.y = Math.min(1, Math.max(0, p.y));
+    const px = p.x * W, py = p.y * H, s = 4 + p.y * 5;
+    const inZ = p.x > ZONE.x && p.x < ZONE.x + ZONE.w && p.y > ZONE.y && p.y < ZONE.y + ZONE.h;
+    if (inZ) inside++;
+    hx.fillStyle = inZ ? "#fff" : "rgba(255,255,255,.4)";
+    hx.beginPath(); hx.ellipse(px, py, s * .45, s * .8, 0, 0, 6.28); hx.fill();
+    if (inZ && s > 7.5) { hx.strokeStyle = "rgba(255,77,28,.8)"; hx.strokeRect(px - s * .8, py - s * 1.3, s * 1.6, s * 2.4); }
+  }
+  const dens = inside / AREA, col = dens > 1.8 ? "#ff4d1c" : dens > 1.2 ? "#e8a317" : "#1f9d6b";
+  hx.strokeStyle = col; hx.lineWidth = 2; hx.setLineDash([8, 6]);
+  hx.strokeRect(ZONE.x * W, ZONE.y * H, ZONE.w * W, ZONE.h * H); hx.setLineDash([]);
+  if (++tick % 6 === 0) {
+    hCount.textContent = inside; hDens.textContent = dens.toFixed(2);
+    hStat.textContent = dens > 1.8 ? "Critical" : dens > 1.2 ? "Warning" : "Nominal"; hStat.style.color = col;
+  }
+  requestAnimationFrame(frame);
+}
+frame();
+
+/* CALIBRATOR: 68 people, area slider */
+const cc = document.getElementById("cc"), cx = cc.getContext("2d");
+const dots = Array.from({ length: 68 }, () => [Math.random(), Math.random()]);
+const area = document.getElementById("area"), dv = document.getElementById("dv"), av = document.getElementById("av"), stat = document.getElementById("stat");
+function drawCal() {
+  const a = +area.value, d = 68 / a;
+  const col = d > 1.8 ? "#ff4d1c" : d > 1.2 ? "#e8a317" : "#1f9d6b";
+  const k = Math.sqrt(a / 150), w = 700 * k, h = 500 * k, ox = (700 - w) / 2, oy = (500 - h) / 2;
+  cx.clearRect(0, 0, 700, 500);
+  cx.fillStyle = col + "33"; cx.fillRect(ox, oy, w, h);
+  cx.strokeStyle = col; cx.lineWidth = 2; cx.setLineDash([8,6]); cx.strokeRect(ox, oy, w, h); cx.setLineDash([]);
+  cx.fillStyle = "#ece8df";
+  for (const [x, y] of dots) { cx.beginPath(); cx.arc(ox + 8 + x * (w - 16), oy + 8 + y * (h - 16), 5, 0, 6.28); cx.fill(); }
+  dv.textContent = d.toFixed(2); av.textContent = a;
+  stat.textContent = d > 1.8 ? "Critical" : d > 1.2 ? "Warning" : "Nominal"; stat.style.background = col;
+}
+area.addEventListener("input", drawCal); drawCal();
+
+/* HOVER IMAGE REVEAL on feature rows */
+const fl = document.getElementById("float"), fimg = fl.querySelector("img"), fph = fl.querySelector(".ph");
+const fx = gsap.quickTo(fl, "x", { duration: .45, ease: "power3" }), fy = gsap.quickTo(fl, "y", { duration: .45, ease: "power3" });
+addEventListener("pointermove", e => { fx(e.clientX + 30); fy(e.clientY - 150); });
+document.querySelectorAll(".row").forEach(row => {
+  row.addEventListener("pointerenter", () => {
+    const src = row.dataset.img; fph.textContent = "add " + src;
+    fimg.classList.remove("on");
+    fimg.onload = () => fimg.classList.add("on"); fimg.onerror = () => fimg.classList.remove("on");
+    fimg.src = src; fl.classList.add("on");
+  });
+  row.addEventListener("pointerleave", () => fl.classList.remove("on"));
+});
+
+/* scroll reveals + chart draw */
+gsap.utils.toArray("h2").forEach(h => gsap.from(h, { y: 70, opacity: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: h, start: "top 85%" } }));
+gsap.from(".row", { opacity: 0, y: 40, stagger: .12, duration: .9, scrollTrigger: { trigger: "#rows", start: "top 80%" } });
+const hist = document.getElementById("hist");
+const L = hist.getTotalLength();
+gsap.set(hist, { strokeDasharray: L, strokeDashoffset: L }); gsap.set(["#fore", "#dot", "#pre"], { opacity: 0 });
+gsap.timeline({ scrollTrigger: { trigger: "#svg", start: "top 70%", end: "bottom 40%", scrub: 1 } })
+  .to(hist, { strokeDashoffset: 0, duration: 3, ease: "none" })
+  .to(["#dot", "#fore", "#pre"], { opacity: 1, duration: 1 });
+</script>
+</body>
+</html>

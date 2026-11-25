@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CrowdWatch · Campus Safety</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#18213b;--muted:#77819b;--line:#e7eaf3;--bg:#f5f6fc;--card:#fff;--purple:#7957ed;--blue:#3b8df5;--green:#13b981;--amber:#f59e0b;--red:#ef5350}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{min-height:100vh;display:grid;grid-template-columns:220px 1fr}.side{background:#1d2238;color:#e9eafd;padding:26px 16px;display:flex;flex-direction:column;gap:28px}.brand{padding:5px 10px 18px}.brandmark{width:42px;height:42px;border-radius:14px;background:#7456e9;display:grid;place-items:center;font-size:22px;margin-bottom:12px}.brand b{font-size:20px;display:block}.brand small{color:#aeb5d0}.nav{display:grid;gap:7px}.nav button{border:0;background:transparent;color:#c4c9dc;text-align:left;padding:13px 14px;border-radius:12px;font:inherit;cursor:pointer}.nav button.active,.nav button:hover{background:#7158df;color:white}.side-note{margin-top:auto;border:1px solid #3b4261;border-radius:16px;padding:17px;color:#bfc6dc;font-size:12px}.main{padding:28px 30px 38px;max-width:1700px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:22px}.eyebrow{display:inline-flex;align-items:center;gap:7px;background:#e0f7ee;color:#07875d;border-radius:30px;padding:6px 11px;font-weight:700;font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:currentColor}.top h1{font-size:30px;line-height:1.15;margin:10px 0 5px;letter-spacing:-.8px}.sub{color:var(--muted);margin:0}.status{display:flex;gap:9px;align-items:center;background:white;border:1px solid var(--line);border-radius:30px;padding:10px 14px;font-size:12px;font-weight:650;white-space:nowrap}.grid{display:grid;gap:14px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 4px 18px #25315b08;min-width:0}.stat{display:flex;align-items:center;gap:12px}.ico{width:43px;height:43px;border-radius:13px;display:grid;place-items:center;font-size:20px;background:#f0ebff;color:var(--purple)}.stat:nth-child(2) .ico{background:#eaf3ff;color:var(--blue)}.stat:nth-child(3) .ico{background:#e4f8ef;color:var(--green)}.stat:nth-child(4) .ico{background:#fff4e4;color:var(--amber)}.value{font-size:25px;font-weight:800;letter-spacing:-.5px}.stat small{display:block;color:var(--muted);font-size:12px}.stat-foot{margin:12px 0 0 55px;color:#10a875;font-weight:700;font-size:12px}.content{grid-template-columns:minmax(0,1fr) 300px;align-items:stretch}.feeds{grid-template-columns:repeat(2,minmax(0,1fr))}.feed-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.feed-head h3,.panel h3{font-size:15px;margin:0}.fps{font-size:11px;color:#07875d;background:#e2f8ee;border-radius:20px;padding:4px 9px;font-weight:750}.video-wrap{position:relative;background:#e9edf5;border-radius:12px;overflow:hidden;aspect-ratio:16/9;display:grid;place-items:center}.video-wrap video{width:100%;height:100%;object-fit:cover;display:block}.placeholder{color:#7d87a0;text-align:center;padding:20px}.placeholder strong{display:block;color:#46516d;margin:8px}.overlay{position:absolute;inset:12px;pointer-events:none;border:2px solid #22c982a8;border-radius:7px}.overlay.blue{border-color:#4098ffb5}.feed-label{position:absolute;left:12px;top:12px;background:#111827c9;color:white;border-radius:8px;padding:7px 9px;font-size:12px;font-weight:650}.feed-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border:1px solid #dfe3ee;background:white;color:#38425d;border-radius:9px;padding:8px 11px;font:600 12px inherit;cursor:pointer}.btn.primary{background:var(--purple);border-color:var(--purple);color:white}.btn:hover{filter:brightness(.97)}input[type=file]{display:none}.sidecol{display:grid;gap:14px;align-content:start}.safe{margin-top:13px;background:#e4f8ef;border-radius:12px;text-align:center;padding:19px 12px}.safe .check{margin:auto auto 8px;width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:white;font-size:22px}.safe strong{display:block;font-size:15px}.safe p{margin:4px 0 0;color:#55766b;font-size:12px}.safe.warn{background:#fff3df}.safe.warn .check{background:var(--amber)}.safe.danger{background:#ffebeb}.safe.danger .check{background:var(--red)}.trendline{height:70px;width:100%;margin-top:10px}.trendline svg{width:100%;height:100%}.bottom{grid-template-columns:1.2fr .8fr;margin-top:15px}.chart{height:190px;width:100%}.chart svg{width:100%;height:100%;overflow:visible}.threshold{display:flex;align-items:center;gap:20px;padding:18px 4px}.ring{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#14bd91 0 75%,#e3f5ee 75% 100%);position:relative;flex:none}.ring:before{content:"";position:absolute;inset:9px;background:white;border-radius:50%}.ring b{z-index:1;font-size:26px}.threshold p{color:var(--muted);font-size:12px;margin:5px 0}.calibration{margin-top:15px}.cal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.field input{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;font:inherit;color:var(--ink)}.hint{font-size:11px;color:var(--muted);margin:9px 0 0}.alert-row{padding:10px 0;border-bottom:1px solid var(--line);font-size:12px}.alert-row:last-child{border:0}.alert-row b{display:block;margin-bottom:2px}.muted{color:var(--muted)}.footer{color:#9099ad;font-size:11px;text-align:center;margin-top:18px}
+@media(max-width:1050px){.app{grid-template-columns:180px 1fr}.content{grid-template-columns:1fr}.sidecol{grid-template-columns:1fr 1fr}.bottom{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.app{display:block}.side{padding:12px;gap:8px}.brand{display:flex;align-items:center;gap:10px;padding:3px}.brandmark{margin:0}.nav{grid-template-columns:repeat(4,1fr)}.nav button{font-size:11px;text-align:center;padding:9px 3px}.side-note{display:none}.main{padding:18px 12px}.top{display:block}.status{display:inline-flex;margin-top:12px}.top h1{font-size:25px}.feeds,.sidecol{grid-template-columns:1fr}.stats{gap:8px}.card{padding:12px}.value{font-size:21px}.cal-grid{grid-template-columns:1fr 1fr 1fr}}
+</style>
+<style>
+.video-wrap .live-stream{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.video-wrap video{position:absolute;inset:0;display:none}
+.overlay{border-width:1px;background-image:linear-gradient(#22c98230 1px,transparent 1px),linear-gradient(90deg,#22c98230 1px,transparent 1px);background-size:28px 28px;transform:perspective(500px) rotateX(5deg);transform-origin:center}
+.overlay.blue{background-image:linear-gradient(#4098ff30 1px,transparent 1px),linear-gradient(90deg,#4098ff30 1px,transparent 1px)}
+.feed-hud{position:absolute;right:12px;top:12px;z-index:2;display:flex;gap:7px;pointer-events:none}
+.feed-hud span{background:#111827d9;color:#fff;border-radius:6px;padding:5px 7px;font-size:10px;line-height:1.35;white-space:nowrap}
+.feed-hud b{display:block;color:#aeb8cc;font-size:8px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.placeholder.simulation{background:radial-gradient(ellipse at 50% 100%,#26334c 0,#151b2a 66%);color:#bac5d8;width:100%;height:100%;display:grid;align-content:center}
+.placeholder.simulation strong{color:#e6edf7}
+.stream-form{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:9px;align-items:end;margin-top:15px;padding-top:14px;border-top:1px solid var(--line)}
+.stream-form label{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
+.stream-form select,.stream-form input{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;font:inherit;color:var(--ink);background:#fff}
+.stream-message{grid-column:1/-1;color:var(--muted);font-size:11px;min-height:14px}
+.footer{line-height:1.8}
+.nav button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+section[id],article[id],main[id]{scroll-margin-top:22px}
+.alert-banner{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:12px 15px;border-radius:12px;background:#fff2df;border:1px solid #f4c77e;color:#784900}
+.alert-banner[hidden]{display:none}
+.alert-banner.critical{background:#ffebeb;border-color:#efb3b3;color:#8e2020}
+.roi-drawing{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.roi-drawing polygon{fill:#38bdf833;stroke:#38bdf8;stroke-width:3;stroke-dasharray:8 5}
+.video-wrap.calibrating{cursor:crosshair;outline:3px solid #38bdf8;outline-offset:2px}
+.calibration-status{color:var(--muted);font-size:10px;align-self:center}
+.source-note{font-size:10px;color:var(--muted);margin:-8px 0 8px}
+@media(max-width:700px){.feed-hud{left:10px;right:auto;top:auto;bottom:10px}.stream-form{grid-template-columns:1fr}.stream-message{grid-column:auto}}
+.nav button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.main.page-home> :not(#homePage){display:none!important}
+#homePage{display:none}
+.main.page-home #homePage{display:block}
+.main.page-cameras>#cameraPageHeading{display:block}
+.camera-page-heading{display:none;margin:0 0 16px}
+.main.page-cameras>.stats,.main.page-cameras>#analytics,.main.page-cameras>#calibration,.main.page-cameras>#dashboardFooter{display:none}
+.main.page-cameras>#feeds{grid-template-columns:1fr}
+.main.page-cameras #feeds .sidecol{display:none}
+.main.page-cameras #feeds .feeds{grid-template-columns:repeat(2,minmax(0,1fr))}
+.main.page-analytics>.stats,.main.page-analytics>#feeds,.main.page-analytics>#calibration,.main.page-analytics>#dashboardFooter,.main.page-analytics>#cameraPageHeading{display:none}
+.main.page-analytics>#analytics{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:4px}
+.main.page-settings>.stats,.main.page-settings>#feeds,.main.page-settings>#analytics,.main.page-settings>#dashboardFooter,.main.page-settings>#cameraPageHeading{display:none}
+.home-page{padding:10px 0}
+.hero{position:relative;overflow:hidden;min-height:410px;border-radius:28px;padding:52px;background:radial-gradient(ellipse at 82% 25%,#614de0 0,transparent 37%),linear-gradient(125deg,#10172e 0%,#20294c 58%,#33346e 100%);color:white;display:grid;grid-template-columns:1.1fr .9fr;gap:35px;align-items:center}
+.hero-copy{position:relative;z-index:1;max-width:640px}
+.hero-kicker{display:inline-flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid #ffffff30;background:#ffffff12;border-radius:30px;color:#c9d1ff;font-size:12px;font-weight:700}
+.hero h1{font-size:clamp(38px,5vw,62px);line-height:1.04;letter-spacing:-2px;margin:20px 0}
+.hero-copy>p{max-width:550px;color:#c2c9df;font-size:16px;line-height:1.7}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.hero-actions .btn{padding:12px 17px;font-size:13px}
+.hero-actions .btn.secondary{border-color:#ffffff50;background:#ffffff12;color:white}
+.hero-preview{position:relative;min-height:280px;border:1px solid #ffffff25;border-radius:22px;background:#0b1124aa;padding:18px;box-shadow:0 20px 80px #080c2080;transform:rotate(1deg)}
+.preview-screen{height:100%;min-height:240px;border-radius:15px;background:linear-gradient(140deg,#334765,#172035 68%);position:relative;overflow:hidden;display:grid;place-items:center}
+.preview-screen:before,.preview-screen:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 49%,#59d2b430 50%,transparent 51%),linear-gradient(90deg,transparent 49%,#59d2b430 50%,transparent 51%);background-size:42px 42px;transform:perspective(500px) rotateX(17deg) scale(1.2)}
+.preview-people{position:relative;z-index:1;display:grid;grid-template-columns:repeat(5,32px);gap:18px 22px;transform:perspective(300px) rotateX(10deg)}
+.preview-people i{width:24px;height:40px;border:1px solid #38bdf8;border-radius:7px;background:#38bdf822;box-shadow:0 0 14px #38bdf844}
+.preview-tag{position:absolute;z-index:2;left:14px;top:14px;border:1px solid #34d39980;border-radius:20px;background:#071b1cbf;padding:6px 9px;color:#7ce6bc;font-size:10px}
+.preview-stat{position:absolute;z-index:2;right:13px;bottom:13px;background:#10172de8;border:1px solid #ffffff24;border-radius:10px;padding:8px 11px;font-size:10px;color:#c5cee1}
+.preview-stat b{display:block;color:white;font-size:16px}
+.home-features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.home-feature{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}
+.home-feature .feature-icon{width:38px;height:38px;border-radius:12px;background:#f0ebff;color:var(--purple);display:grid;place-items:center;font-size:18px;margin-bottom:12px}
+.home-feature h3{margin:0 0 7px;font-size:14px}
+.home-feature p{color:var(--muted);font-size:12px;margin:0;line-height:1.6}
+.area-help{padding:12px 14px;margin-top:14px;border-radius:12px;background:#f4f6fb;color:#65708a;font-size:12px}
+.roi-drawing{pointer-events:none}
+.roi-drawing.selecting{pointer-events:all;touch-action:none;cursor:crosshair}
+.roi-drawing rect{fill:#38bdf833;stroke:#38bdf8;stroke-width:3;stroke-dasharray:8 5}
+.roi-drawing circle{fill:#fff;stroke:#38bdf8;stroke-width:3}
+.video-wrap.calibrating{cursor:crosshair;outline:3px solid #38bdf8;outline-offset:2px}
+.analysis-summary{grid-column:1/-1}
+.analysis-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.analysis-metric{border-radius:12px;background:#f6f7fb;padding:13px}
+.analysis-metric span{display:block;color:var(--muted);font-size:10px}
+.analysis-metric b{font-size:19px}
+.home-feature{opacity:0;transform:perspective(900px) translateY(36px) rotateX(7deg);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1);transform-origin:center top}
+.home-feature.revealed{opacity:1;transform:perspective(900px) translateY(0) rotateX(0)}
+.home-feature:hover{transform:perspective(900px) translateY(-5px) rotateY(-2deg)}
+.hero-preview{transition:transform .15s ease-out}
+.analysis-table-wrap{overflow:auto;margin-top:12px}
+.analysis-table{width:100%;border-collapse:collapse;font-size:12px;min-width:650px}
+.analysis-table th,.analysis-table td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.analysis-table th:first-child,.analysis-table td:first-child{text-align:left}
+.analysis-table thead{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.analysis-table td:first-child{font-weight:700}
+@media(prefers-reduced-motion:reduce){.home-feature,.hero-preview{transition:none!important;transform:none!important;opacity:1!important;scroll-behavior:auto!important}}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding:32px}.hero-preview{min-height:230px}.analysis-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.nav{grid-template-columns:repeat(5,1fr)}.nav button{padding:8px 2px;font-size:10px}.hero{padding:25px;min-height:0;border-radius:20px}.hero h1{font-size:39px}.hero-preview{min-height:210px}.home-features{grid-template-columns:1fr}.main.page-cameras #feeds .feeds{grid-template-columns:1fr}.main.page-analytics>#analytics{grid-template-columns:1fr}.analysis-summary{grid-column:auto}.analysis-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.feed-actions .calibration-status{width:100%}}
+</style>
+<style>
+:root{--ink:#14110f;--muted:#6f6a60;--line:#cfc9bb;--bg:#ece8df;--card:#f4f1ea;--purple:#ff4d1c;--blue:#566c7c;--green:#1f9d6b;--amber:#e8a317;--red:#ff4d1c;--paper:#ece8df;--signal:#ff4d1c}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif;font-size:15px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:80;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+.app{display:block;min-height:100vh}
+.side{position:fixed;z-index:70;inset:0 0 auto;height:76px;min-height:76px;padding:12px 4vw;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:24px;background:rgba(236,232,223,.96);color:var(--ink);border-bottom:1px solid var(--ink)}
+.brand{display:flex;align-items:center;gap:11px;padding:0;white-space:nowrap}
+.brandmark{width:36px;height:36px;margin:0;border:1px solid var(--ink);border-radius:50%;background:transparent;color:var(--signal);font-size:20px}
+.brand b{font-family:"Instrument Serif",serif;font-size:24px;font-weight:400;line-height:1}
+.brand small{display:block;color:var(--muted);font:10px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}
+.nav{display:flex;align-items:center;gap:clamp(2px,1.3vw,20px)}
+.nav button{position:relative;padding:10px 7px;border-radius:0;background:transparent;color:var(--muted);font:11px "IBM Plex Mono",monospace;letter-spacing:.045em;text-transform:uppercase;white-space:nowrap}
+.nav button.active,.nav button:hover{background:transparent;color:var(--ink)}
+.nav button.active::after{position:absolute;content:"";left:7px;right:7px;bottom:2px;height:2px;background:var(--signal)}
+.side-note{display:none}
+.main{width:100%;max-width:1800px;margin:0 auto;padding:116px 4vw 48px}
+.main.page-home{padding-top:96px}
+.top{align-items:flex-end;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.top h1{margin:8px 0 3px;font:400 clamp(38px,5.2vw,72px)/.95 "Instrument Serif",serif;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:14px}
+.eyebrow{padding:0;background:none;color:var(--signal);font:11px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}
+.status{border:1px solid var(--ink);border-radius:2px;background:transparent;padding:9px 12px;color:var(--ink);font:10px "IBM Plex Mono",monospace;text-transform:uppercase;white-space:normal}
+.grid{gap:12px}
+.card{border:1px solid var(--line);border-radius:2px;background:var(--card);box-shadow:none;padding:17px}
+.stats{gap:0;border-block:1px solid var(--ink);margin-bottom:18px;background:var(--card)}
+.stats>.card{border:0;border-right:1px solid var(--line);border-radius:0;background:transparent}
+.stats>.card:last-child{border-right:0}
+.stat{gap:12px}
+.ico{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:transparent!important;color:var(--signal)!important;font-size:17px}
+.value{font:400 34px/.95 "Instrument Serif",serif;letter-spacing:0}
+.stat small{font:10px "IBM Plex Mono",monospace;color:var(--muted);text-transform:uppercase}
+.stat-foot{margin:9px 0 0 48px;color:var(--muted);font:10px "IBM Plex Mono",monospace}
+.content{grid-template-columns:minmax(0,1fr) 300px}
+.feed-head h3,.panel h3{font:400 23px/1.05 "Instrument Serif",serif}
+.fps{border-radius:2px;background:#dce9df;color:#176e4d;font:10px "IBM Plex Mono",monospace}
+.video-wrap{border-radius:2px;background:var(--ink)}
+.overlay{inset:10px;border-color:#ff4d1c;background-image:linear-gradient(#ff4d1c28 1px,transparent 1px),linear-gradient(90deg,#ff4d1c28 1px,transparent 1px)}
+.overlay.blue{border-color:#ff4d1c;background-image:linear-gradient(#ff4d1c28 1px,transparent 1px),linear-gradient(90deg,#ff4d1c28 1px,transparent 1px)}
+.feed-label{border-radius:2px;background:#14110fee;color:#ece8df;font:10px "IBM Plex Mono",monospace;text-transform:uppercase}
+.feed-hud span{border-radius:2px;background:#14110fee;color:#ece8df;font:9px "IBM Plex Mono",monospace;text-transform:uppercase}
+.feed-hud b{color:#ffb29c;font-size:8px}
+.feed-actions{gap:6px}
+.btn{border:1px solid var(--ink);border-radius:2px;background:transparent;color:var(--ink);padding:8px 11px;font:10px "IBM Plex Mono",monospace;letter-spacing:.025em;text-transform:uppercase}
+.btn.primary{border-color:var(--signal);background:var(--signal);color:#fff}
+.btn:hover{filter:none;background:var(--ink);color:var(--paper)}
+.btn.primary:hover{background:#d9360b;border-color:#d9360b;color:#fff}
+.sidecol{gap:12px}
+.safe{border-radius:2px;background:#dce9df}
+.safe.warn{background:#f2e7cf}
+.safe.danger{background:#f6ddd5}
+.safe .check{width:34px;height:34px}
+.safe p,.threshold p{color:var(--muted)}
+.alert-row{border-color:var(--line);font-size:11px}
+.bottom{gap:12px;margin-top:18px}
+.analysis-metric{border:1px solid var(--line);border-radius:2px;background:#ece8df;padding:12px}
+.analysis-metric span,.analysis-table thead{font:9px "IBM Plex Mono",monospace;color:var(--muted);text-transform:uppercase}
+.analysis-metric b{font:400 24px "Instrument Serif",serif}
+.analysis-table{font-size:11px}
+.analysis-table th,.analysis-table td{border-color:var(--line)}
+.analysis-table td:first-child{font-family:"IBM Plex Mono",monospace;font-size:10px}
+.ring{border-radius:50%}
+.alert-banner{border:1px solid var(--amber);border-radius:2px;background:#f2e7cf;color:#5a3b00;font:11px "IBM Plex Mono",monospace}
+.alert-banner.critical{border-color:var(--signal);background:#f6ddd5;color:#721d07}
+.calibration{margin-top:18px}
+.field label,.stream-form label{font:9px "IBM Plex Mono",monospace;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.field input,.stream-form select,.stream-form input{border:1px solid var(--line);border-radius:2px;background:#ece8df;color:var(--ink);font:12px "DM Sans",sans-serif}
+.area-help{border-left:2px solid var(--signal);border-radius:0;background:#ebe4d7;color:var(--muted);font-size:12px}
+.stream-form{border-color:var(--line)}
+.stream-message,.hint,.source-note,.calibration-status{font:10px "IBM Plex Mono",monospace}
+.footer{border-top:1px solid var(--line);padding-top:15px;color:var(--muted);font:10px "IBM Plex Mono",monospace;text-transform:uppercase}
+.home-page{padding:0}
+.hero{min-height:calc(100vh - 120px);padding:7vh 0 5vh;border-radius:0;background:transparent;color:var(--ink);grid-template-columns:1.05fr 1fr;gap:4vw}
+.hero-copy{max-width:700px}
+.hero-kicker{border:0;border-radius:0;background:none;padding:0;color:var(--muted);font:11px "IBM Plex Mono",monospace;letter-spacing:.06em}
+.hero h1{margin:22px 0;font:400 clamp(54px,8.2vw,128px)/.88 "Instrument Serif",serif;letter-spacing:-.025em}
+.hero-copy>p{max-width:440px;color:var(--muted);font-size:16px;line-height:1.65}
+.hero-actions{gap:10px}
+.hero-actions .btn{padding:12px 16px}
+.hero-actions .btn.secondary{border-color:var(--ink);background:transparent;color:var(--ink)}
+.hero-preview{min-height:0;aspect-ratio:4/5;border:1px solid var(--ink);border-radius:2px;background:var(--ink);padding:0;box-shadow:none;transform:none}
+.preview-screen{min-height:0;height:100%;border-radius:0;background:linear-gradient(145deg,#2c2924,#11100e)}
+.preview-screen:before,.preview-screen:after{background:linear-gradient(transparent 49%,#ffffff15 50%,transparent 51%),linear-gradient(90deg,transparent 49%,#ffffff15 50%,transparent 51%);background-size:35px 35px}
+.preview-people{gap:14px 18px}
+.preview-people i{border-color:#ff4d1c;background:#ff4d1c22;box-shadow:0 0 14px #ff4d1c33}
+.preview-tag{border-radius:2px;background:#14110fee;border-color:#ffffff30;color:#f4f1ea;font:9px "IBM Plex Mono",monospace}
+.preview-stat{border-radius:2px;background:#14110fee;color:#cfc9bb;font:9px "IBM Plex Mono",monospace}
+.preview-stat b{font:400 22px "Instrument Serif",serif}
+.home-features{gap:0;margin-top:0;border-top:1px solid var(--ink)}
+.home-feature{border:0;border-bottom:1px solid var(--ink);border-radius:0;background:transparent;padding:22px 18px;box-shadow:none}
+.home-feature .feature-icon{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--signal);font-size:15px}
+.home-feature h3{font:400 22px "Instrument Serif",serif}
+.home-feature p{color:var(--muted);font-size:12px}
+.home-feature:hover{color:var(--signal)}
+.main.page-cameras #feeds .feeds{grid-template-columns:repeat(2,minmax(0,1fr))}
+.main.page-analytics>#analytics{gap:12px}
+section[id],article[id],main[id]{scroll-margin-top:94px}
+.nav button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+@media(max-width:1050px){.content{grid-template-columns:1fr}.sidecol{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stats>.card:nth-child(2){border-right:0}.stats>.card:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media(max-width:700px){.side{height:auto;min-height:88px;padding:9px 4vw;gap:5px;flex-wrap:wrap}.brand{width:100%}.brandmark{width:30px;height:30px}.brand b{font-size:21px}.nav{width:100%;justify-content:space-between;gap:0;overflow-x:auto}.nav button{padding:8px 4px;font-size:8px}.main,.main.page-home{padding:145px 4vw 32px}.hero{min-height:0;padding:4vh 0;grid-template-columns:1fr;gap:24px}.hero h1{font-size:clamp(48px,15vw,80px)}.hero-preview{width:100%;max-width:430px;aspect-ratio:4/3}.home-features{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats>.card{padding:12px 8px}.stats>.card:nth-child(2){border-right:0}.stats>.card:nth-child(odd){border-right:1px solid var(--line)}.stats>.card:nth-child(-n+2){border-bottom:1px solid var(--line)}.feeds,.sidecol{grid-template-columns:1fr}.main.page-cameras #feeds .feeds{grid-template-columns:1fr}.main.page-analytics>#analytics{grid-template-columns:1fr}.analysis-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.cal-grid{grid-template-columns:1fr 1fr}.stream-form{grid-template-columns:1fr}.stream-message{grid-column:auto}.feed-hud{left:10px;right:10px;justify-content:space-between}.status{max-width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+<style>
+.side{border-bottom-color:#cfc9bb;background:rgba(236,232,223,.96)}
+.main{padding-top:112px}
+.top{border-bottom-color:#cfc9bb}
+.status{border:1px solid #d5cfc2;border-radius:30px;background:#f4f1ea;padding:8px 12px}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;margin:0 0 28px;padding:10px 0 18px;border:0;border-bottom:1px solid #cfc9bb;background:transparent}
+.stats>.card,.stats>.card:nth-child(n){border:0;padding:4px 0;background:transparent}
+.stats>.card:nth-child(n) .ico{display:none}
+.stats .stat{align-items:flex-start}
+.stats .value{font-size:42px}
+.stats .stat-foot{margin:8px 0 0;color:var(--muted)}
+.content{grid-template-columns:minmax(0,1fr) 260px;gap:30px}
+.feeds{gap:22px 24px}
+.feeds>.card,.main.page-cameras #feeds .feeds>.card{padding:0 0 18px;border:0;border-bottom:1px solid #cfc9bb;background:transparent}
+.feed-head{margin-bottom:10px}
+.feed-head h3,.panel h3{font-size:25px}
+.fps{padding:0;background:transparent}
+.video-wrap{border-radius:3px}
+.feed-hud{inset:auto 10px 10px;display:flex;justify-content:space-between;gap:0;padding:9px 5px;border-top:1px solid #ffffff30;background:#14110fee}
+.feed-hud span{flex:1;padding:2px 9px;border-radius:0;background:transparent;text-align:left}
+.feed-hud span+span{border-left:1px solid #ffffff35}
+.feed-label{top:10px;left:10px}
+.feed-actions{gap:4px;margin-top:10px}
+.feed-actions .btn{padding:7px 9px;border-color:transparent}
+.feed-actions .btn.primary{border-color:var(--signal)}
+.source-note{min-height:0;margin:0 0 8px}
+.sidecol{gap:20px}
+.sidecol>.card{padding:18px 0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.sidecol>.card:first-child{padding:19px;background:#24211d;color:#f4f1ea}
+.sidecol>.card:first-child .muted{color:#c1bbae}
+.sidecol>.card:first-child .safe{color:var(--ink)}
+.sidecol>.card:first-child .safe p{color:#55766b}
+.sidecol>.card:last-child{border-top:1px solid #cfc9bb}
+.bottom{gap:28px 34px;margin-top:28px}
+.bottom>.card{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.bottom>.analysis-summary{grid-column:1/-1;padding:19px 22px;background:#e4e0d6}
+.analysis-summary .analysis-metrics{gap:0}
+.analysis-summary .analysis-metric{padding:8px 14px;border:0;border-left:1px solid #cfc9bb;border-radius:0;background:transparent}
+.analysis-summary .analysis-metric:first-child{border-left:0}
+.analysis-table-wrap{margin-top:16px}
+.analysis-table th,.analysis-table td{padding:9px 8px}
+.bottom>.card:nth-child(3){padding:17px 20px;background:#f4f1ea}
+.threshold{padding:14px 0}
+.ring{width:90px;height:90px}
+.calibration{padding:24px 0 0;border:0;border-top:1px solid #cfc9bb;background:transparent}
+.area-help{max-width:950px}
+.home-features{border-top:1px solid #cfc9bb}
+.home-feature{border-bottom-color:#cfc9bb}
+.footer{margin-top:25px}
+@media(max-width:1050px){.content{grid-template-columns:1fr}.sidecol{grid-template-columns:1fr 1fr}.sidecol>.card:first-child{padding:18px}.stats{gap:18px}}
+@media(max-width:700px){.main{padding-top:145px}.stats{gap:10px 18px;padding-bottom:15px}.stats>.card,.stats>.card:nth-child(n){padding:7px 0}.stats .value{font-size:36px}.content{gap:18px}.feeds{gap:18px}.sidecol{grid-template-columns:1fr}.sidecol>.card:first-child{padding:17px}.bottom{gap:22px}.bottom>.analysis-summary{padding:15px}.analysis-summary .analysis-metric{padding:8px 6px}.feed-hud{inset:auto 8px 8px;padding:6px 2px}.feed-hud span{padding:2px 5px;font-size:8px}.feed-hud b{font-size:7px}.feed-actions .btn{padding:7px 6px;font-size:9px}}
+</style>
+<style>
+.cal-grid .field:nth-child(n+7){padding-top:12px;border-top:1px solid var(--line)}
+.cal-grid .field input,.stream-form select,.stream-form input{border:0;border-bottom:1px solid #cfc9bb;border-radius:0;background:transparent;padding:9px 0;box-shadow:none}
+.cal-grid .field input:focus,.stream-form select:focus,.stream-form input:focus{border-bottom-color:var(--signal);outline:0}
+.stream-form select{padding-inline:0}
+.fps{padding:0;border-radius:0;background:transparent}
+.fps::before{content:"";display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:var(--green);vertical-align:1px}
+.feeds>.card{display:flex;flex-direction:column;align-items:stretch}
+.feed-head{min-height:34px}
+.source-note{min-height:32px;line-height:1.4;font-size:11px}
+.video-wrap{width:100%;flex:none}
+.feed-actions{min-height:66px;align-content:flex-start}
+.analysis-table th,.analysis-table td{font-size:11px}
+.analysis-table thead{font-size:10px}
+.feed-hud span{font-size:10px}
+.feed-hud b{font-size:9px}
+.field label,.stream-form label{font-size:10px}
+.dashboard-feed-controls{display:none;align-items:center;gap:14px;margin:0 0 16px;padding:0 0 12px;border-bottom:1px solid var(--line);font:10px "IBM Plex Mono",monospace;text-transform:uppercase}
+.dashboard-feed-controls>span{color:var(--muted);margin-right:auto}
+.dashboard-feed-controls label{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.dashboard-feed-controls select{min-width:170px;padding:8px 10px;border:1px solid var(--line);border-radius:3px;background:var(--card);color:var(--ink);font:11px "DM Sans",sans-serif;text-transform:none}
+.main.page-dashboard #feeds{grid-template-columns:1fr}
+.main.page-dashboard #feeds .dashboard-feed-controls{display:flex}
+.main.page-dashboard #feedsGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.main.page-dashboard #feedsGrid .card[hidden]{display:none!important}
+.main.page-dashboard #feeds .sidecol{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:12px}
+.main.page-cameras #feedsGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.analysis-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sound-alert-setting{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.sound-alert-setting span{font-size:11px}
+@media(max-width:700px){.dashboard-feed-controls{align-items:stretch;flex-direction:column;gap:8px}.dashboard-feed-controls>span{margin:0}.dashboard-feed-controls label{justify-content:space-between}.dashboard-feed-controls select{min-width:0;width:68%}.main.page-dashboard #feedsGrid,.main.page-cameras #feedsGrid{grid-template-columns:1fr}.main.page-dashboard #feeds .sidecol{grid-template-columns:1fr}.analysis-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.sound-alert-setting{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+ <div class="brand"><div class="brandmark">◉</div><div><b>CrowdWatch</b><small>Campus Fest Safety</small></div></div>
+ <nav class="nav" aria-label="Website sections"><button type="button" class="active" data-target="home" aria-current="page">⌂ Home</button><button type="button" data-target="dashboard">▦ Dashboard</button><button type="button" data-target="cameras">▣ Cameras</button><button type="button" data-target="analytics">▥ Analytics</button><button type="button" data-target="settings">⚙ Settings</button></nav>
+ <div class="side-note">✦<br><b style="color:white">Safer Fest.<br>Happier Campus.</b><p>Monitor zones early. Keep people moving safely.</p></div>
+</aside>
+<main class="main page-home" id="dashboard">
+ <section id="homePage" class="home-page">
+  <div class="hero"><div class="hero-copy"><span class="hero-kicker"><i class="dot"></i> REAL-TIME CROWD INTELLIGENCE</span><h1>See the flow.<br>Keep people safe.</h1><p>CrowdWatch helps event teams monitor camera zones, understand crowd density, and spot rising pressure early so volunteers can respond with confidence.</p><div class="hero-actions"><button class="btn primary" type="button" onclick="showPage('dashboard')">Open live dashboard →</button><button class="btn secondary" type="button" onclick="showPage('cameras')">Explore camera feeds</button></div></div><div class="hero-preview" aria-label="Illustration of person detection"><div class="preview-screen"><span class="preview-tag">● LIVE · PERSON TRACKING</span><div class="preview-people"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="preview-stat">LIVE ZONES<b id="homeZoneCount">6 camera angles</b></div></div></div></div>
+  <div class="home-features"><article class="home-feature"><div class="feature-icon">▣</div><h3>See every monitored zone</h3><p>View live camera streams with person boxes, track IDs, and area-specific counts.</p></article><article class="home-feature"><div class="feature-icon">⌁</div><h3>Understand crowd movement</h3><p>Compare density and recent trends, then use a short-horizon forecast as an early-warning aid.</p></article><article class="home-feature"><div class="feature-icon">⚙</div><h3>Set up for your venue</h3><p>Mark a camera region, enter its measured floor area, and configure each stream and alert threshold.</p></article></div>
+ </section>
+ <header class="top"><div><span class="eyebrow"><i class="dot"></i> Live monitoring</span><h1>Crowd Density Alert</h1><p class="sub">A clear view of campus crowd movement, zone by zone.</p></div><div class="status">◷ <span id="clock">--:--</span> &nbsp; <span style="color:var(--green)">●</span> <span id="backendStatus">Connecting to detection backend</span></div></header>
+ <div class="alert-banner" id="alertBanner" hidden role="status" aria-live="assertive"><strong id="alertTitle"></strong><span id="alertDetail"></span></div>
+ <div class="camera-page-heading" id="cameraPageHeading"><h1>Live camera feeds</h1><p class="sub">Select a zone to view its live stream and tracking overlays.</p></div>
+ <section class="grid stats">
+  <article class="card"><div class="stat"><div class="ico">♟</div><div><div class="value" id="countA">0</div><small>Total people · Gate A</small></div></div><div class="stat-foot" id="changeA">Waiting for video</div></article>
+  <article class="card"><div class="stat"><div class="ico">♟</div><div><div class="value" id="countB">0</div><small>Total people · Food Court</small></div></div><div class="stat-foot" id="changeB">Waiting for video</div></article>
+  <article class="card"><div class="stat"><div class="ico">▦</div><div><div class="value" id="densityA">—</div><small>Density · Gate A</small></div></div><div class="stat-foot">People per m²</div></article>
+  <article class="card"><div class="stat"><div class="ico">⚑</div><div><div class="value" id="overall">Standby</div><small>Highest zone status</small></div></div><div class="stat-foot" id="statusFoot" style="color:var(--muted)">Load threshold: 90%</div></article>
+ </section>
+ <section class="grid content" id="feeds">
+  <div class="dashboard-feed-controls" id="dashboardFeedControls"></div>
+  <div class="grid feeds" id="feedsGrid">
+   <article class="card"><div class="feed-head"><h3>● Main Stage Entrance</h3><span class="fps" id="fpsA">CONNECTING</span></div><div class="video-wrap" id="wrapA"><div class="placeholder simulation" id="placeholderA">▣<strong>Starting simulation fallback</strong><span>Connecting to the local YOLOv8 backend...</span></div><img class="live-stream" id="streamA" src="http://127.0.0.1:8000/stream/feed1" alt="Main Stage Entrance live detection stream" onload="streamConnected('A')" onerror="streamFailed('A')"><video id="videoA" muted playsinline></video><div class="overlay"></div><svg class="roi-drawing" id="roiLayerA" viewBox="0 0 640 360" preserveAspectRatio="none"><polygon id="roiPolygonA" points=""></polygon><rect id="roiPreviewA" x="0" y="0" width="0" height="0" style="display:none"></rect><g id="roiMarkersA"></g></svg><div class="feed-label" id="labelA">Connecting to backend</div><div class="feed-hud"><span>Zone Area<b id="areaHudA">260 m²</b></span><span>Est. Count<b id="countHudA">—</b></span><span>Density<b id="densityHudA">— p/m²</b></span></div></div><div class="feed-actions"><label class="btn primary" for="fileA">Upload video</label><input id="fileA" type="file" accept="video/*"><button class="btn" onclick="startCamera('A')">Use webcam</button><button class="btn" onclick="startZoneCalibration('A','rect')">Drag area</button><button class="btn" onclick="startZoneCalibration('A','polygon')">Polygon</button><button class="btn" onclick="clearZoneCalibration('A')">Clear area</button><button class="btn" onclick="stopFeed('A')">Stop</button><span class="calibration-status" id="calibrationStatusA">ROI not set · full frame counting</span></div></article>
+   <article class="card"><div class="feed-head"><h3>● Food Court Lane</h3><span class="fps" id="fpsB">CONNECTING</span></div><p class="source-note" id="sourceNotice" aria-live="polite"></p><div class="video-wrap" id="wrapB"><div class="placeholder simulation" id="placeholderB">▣<strong>Starting simulation fallback</strong><span>Connecting to the local YOLOv8 backend...</span></div><img class="live-stream" id="streamB" src="http://127.0.0.1:8000/stream/feed2" alt="Food Court Lane live detection stream" onload="streamConnected('B')" onerror="streamFailed('B')"><video id="videoB" muted playsinline></video><div class="overlay blue"></div><svg class="roi-drawing" id="roiLayerB" viewBox="0 0 640 360" preserveAspectRatio="none"><polygon id="roiPolygonB" points=""></polygon><rect id="roiPreviewB" x="0" y="0" width="0" height="0" style="display:none"></rect><g id="roiMarkersB"></g></svg><div class="feed-label" id="labelB">Connecting to backend</div><div class="feed-hud"><span>Zone Area<b id="areaHudB">180 m²</b></span><span>Est. Count<b id="countHudB">—</b></span><span>Density<b id="densityHudB">— p/m²</b></span></div></div><div class="feed-actions"><label class="btn primary" for="fileB">Upload video</label><input id="fileB" type="file" accept="video/*"><button class="btn" onclick="startCamera('B')">Use webcam</button><button class="btn" onclick="startZoneCalibration('B','rect')">Drag area</button><button class="btn" onclick="startZoneCalibration('B','polygon')">Polygon</button><button class="btn" onclick="clearZoneCalibration('B')">Clear area</button><button class="btn" onclick="stopFeed('B')">Stop</button><span class="calibration-status" id="calibrationStatusB">ROI not set · full frame counting</span></div></article>
+  </div>
+  <aside class="sidecol">
+   <article class="card panel"><h3>♧ Zone safety</h3><div class="safe" id="safeBox"><div class="check" id="safeIcon">✓</div><strong id="safeTitle">Waiting for feeds</strong><p id="safeText">Connect a video source to begin.</p></div><div style="margin-top:14px"><b style="font-size:13px">Early warning</b><p class="muted" id="trendText" style="font-size:12px">Trend analysis starts when monitoring begins.</p><div class="trendline"><svg viewBox="0 0 260 70" preserveAspectRatio="none"><path id="trendPath" d="M0 60 L260 60" fill="none" stroke="#805cf5" stroke-width="3" stroke-linecap="round"/></svg></div></div></article>
+   <article class="card panel"><h3>Recent activity</h3><div id="alerts"><div class="alert-row"><b>YOLOv8 backend starting</b><span class="muted">Connecting to live camera feeds and person detection.</span></div></div></article>
+  </aside>
+ </section>
+ <section class="grid bottom" id="analytics">
+  <article class="card panel analysis-summary"><div class="feed-head"><h3>Live detection diagnostics</h3><span class="muted" style="font-size:11px">Updates with backend telemetry</span></div><div class="analysis-metrics"><div class="analysis-metric"><span>People across all feeds</span><b id="analysisCountA">0</b></div><div class="analysis-metric"><span>Peak zone density</span><b id="analysisCountB">0</b></div><div class="analysis-metric"><span>Detector inference rate</span><b id="analysisDetectorFps">0 FPS</b></div><div class="analysis-metric"><span>Video output rate</span><b id="analysisOutputFps">0 FPS</b></div></div><div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>Camera / zone</th><th>Area (m²)</th><th>People</th><th>Density (p/m²)</th><th>Trend</th><th>+5 min est.</th><th>+10 min est.</th></tr></thead><tbody id="analysisRows"></tbody></table></div><p class="hint" id="analysisSourceNote">Forecasts are trend-based estimates, not guarantees; detector count quality depends on camera angle, lighting, and crowd occlusion.</p></article>
+  <article class="card panel"><div class="feed-head"><h3>⌁ Crowd trend</h3><span class="muted" id="trendLegend" style="font-size:11px">Live history · selected cameras</span></div><div class="chart"><svg viewBox="0 0 600 190" preserveAspectRatio="none"><g stroke="#e8ebf3" stroke-dasharray="4 4"><path d="M35 20H590M35 75H590M35 130H590M35 165H590"/></g><g fill="#8791aa" font-size="10"><text x="4" y="23">High</text><text x="8" y="78">Mid</text><text x="8" y="168">Low</text><text x="35" y="185">Start</text><text x="555" y="185">Now</text></g><path id="areaA" d="M35 150 L590 150 L590 165 L35 165Z" fill="#805cf5" opacity=".12"/><path id="lineA" d="M35 150 L590 150" fill="none" stroke="#805cf5" stroke-width="3" stroke-linecap="round"/><path id="lineB" d="M35 160 L590 160" fill="none" stroke="#3b8df5" stroke-width="3" stroke-linecap="round"/><path id="forecastA" d="" fill="none" stroke="#805cf5" stroke-width="2" stroke-dasharray="4 4"/><path id="forecastB" d="" fill="none" stroke="#3b8df5" stroke-width="2" stroke-dasharray="4 4"/></svg></div></article>
+  <article class="card panel"><h3>◈ Safety threshold</h3><div class="threshold"><div class="ring" id="ring"><b id="loadPct">0%</b></div><div><b id="loadLabel">No active load</b><p id="loadDescription">Set zone area and safe capacity below.</p><p>Warning threshold: 75% · Critical: 90%</p></div></div></article>
+ </section>
+ <article class="card calibration" id="calibration"><div class="feed-head"><h3>⚙ Venue & alert settings</h3><span class="muted" style="font-size:11px">Tune zone measurements and early warnings</span></div><div class="cal-grid" id="areaFields"></div><div class="area-help">Select <b>Drag area</b> under a camera and drag over its footage, or choose <b>Polygon</b> and click four corners. Set the measured floor area above; the detector counts people whose foot points fall inside the zone. Forecasts use recent counts and are estimates, not guarantees.</div><form class="stream-form" id="streamForm"><div><label for="streamFeed">Camera feed</label><select id="streamFeed"></select></div><div><label for="streamUrl">New camera stream URL</label><input id="streamUrl" type="url" placeholder="https://.../playlist.m3u8" required></div><button class="btn primary" type="submit">Update Stream</button><div class="stream-message" id="streamMessage" aria-live="polite"></div></form><div class="sound-alert-setting"><button class="btn" id="soundAlertToggle" type="button" aria-pressed="false">Enable sound alerts</button><span class="muted" id="soundAlertState" role="status">Sound is off · enable it to hear crowd alerts.</span></div></article>
+ <p class="footer" id="dashboardFooter">CrowdWatch · Video output: <span id="footerFps">0</span> FPS · YOLO inference: <span id="footerDetectionFps">0</span> FPS</p>
+</main></div>
+<script>
+const $=id=>document.getElementById(id);
+const sourceNoticeA=document.createElement('p');sourceNoticeA.className='source-note';sourceNoticeA.id='sourceNoticeA';$('wrapA').before(sourceNoticeA);
+const zones=['A','B','C','D','E','F'];
+const cameraNames={A:'Main Stage Entrance',B:'Food Court Lane',C:'North Gate',D:'East Walkway',E:'Library Plaza',F:'South Entrance'};
+const savedDashboardA=localStorage.getItem('crowdwatch.dashboardA'),savedDashboardB=localStorage.getItem('crowdwatch.dashboardB');
+const dashboardSelection=[zones.includes(savedDashboardA)?savedDashboardA:'A',zones.includes(savedDashboardB)?savedDashboardB:'B'];
+if(dashboardSelection[0]===dashboardSelection[1])dashboardSelection[1]=zones.find(zone=>zone!==dashboardSelection[0]);
+const defaultAreas={A:260,B:180,C:220,D:220,E:220,F:220};
+const feedForZone=zone=>zones.indexOf(zone)+1;
+const areaFields=$('areaFields'),streamFeedSelect=$('streamFeed');
+areaFields.innerHTML=zones.map(zone=>`<div class="field"><label for="area${zone}">${cameraNames[zone]} area (m²)</label><input id="area${zone}" type="number" min="1" value="${defaultAreas[zone]}"></div>`).join('')+'<div class="field"><label for="limit">Safe people limit · per zone</label><input id="limit" type="number" min="1" value="900"></div><div class="field"><label for="densityThreshold">Early alert density (people/m²)</label><input id="densityThreshold" type="number" min="0.1" step="0.1" value="1.5"></div><div class="field"><label for="forecastMinutes">Forecast horizon (minutes)</label><input id="forecastMinutes" type="number" min="1" max="10" value="3"></div>';
+streamFeedSelect.innerHTML=zones.map((zone,index)=>`<option value="${index+1}">${cameraNames[zone]}</option>`).join('');
+const dashboardOptions=zones.map(zone=>`<option value="${zone}">${cameraNames[zone]}</option>`).join('');
+$('dashboardFeedControls').innerHTML=`<span>Dashboard cameras</span><label>Camera 1<select id="dashboardFeedA">${dashboardOptions}</select></label><label>Camera 2<select id="dashboardFeedB">${dashboardOptions}</select></label>`;
+$('dashboardFeedA').value=dashboardSelection[0];$('dashboardFeedB').value=dashboardSelection[1];
+const extraCameraMarkup=zone=>{const feed=feedForZone(zone),name=cameraNames[zone];return `<article class="card"><div class="feed-head"><h3>● ${name}</h3><span class="fps" id="fps${zone}">CONNECTING</span></div><p class="source-note" id="sourceNotice${zone}" aria-live="polite"></p><div class="video-wrap" id="wrap${zone}"><div class="placeholder simulation" id="placeholder${zone}">▣<strong>Starting simulation fallback</strong><span>Connecting to the local YOLOv8 backend...</span></div><img class="live-stream" id="stream${zone}" src="http://127.0.0.1:8000/stream/feed${feed}" alt="${name} live detection stream" onload="streamConnected('${zone}')" onerror="streamFailed('${zone}')"><video id="video${zone}" muted playsinline></video><div class="overlay ${feed%2?'':'blue'}"></div><svg class="roi-drawing" id="roiLayer${zone}" viewBox="0 0 640 360" preserveAspectRatio="none"><polygon id="roiPolygon${zone}" points=""></polygon><rect id="roiPreview${zone}" x="0" y="0" width="0" height="0" style="display:none"></rect><g id="roiMarkers${zone}"></g></svg><div class="feed-label" id="label${zone}">Connecting to backend</div><div class="feed-hud"><span>Zone Area<b id="areaHud${zone}">${defaultAreas[zone]} m²</b></span><span>Est. Count<b id="countHud${zone}">—</b></span><span>Density<b id="densityHud${zone}">— p/m²</b></span></div></div><div class="feed-actions"><label class="btn primary" for="file${zone}">Upload video</label><input id="file${zone}" type="file" accept="video/*"><button class="btn" onclick="startCamera('${zone}')">Use webcam</button><button class="btn" onclick="startZoneCalibration('${zone}','rect')">Drag area</button><button class="btn" onclick="startZoneCalibration('${zone}','polygon')">Polygon</button><button class="btn" onclick="clearZoneCalibration('${zone}')">Clear area</button><button class="btn" onclick="stopFeed('${zone}')">Stop</button><span class="calibration-status" id="calibrationStatus${zone}">ROI not set · full frame counting</span></div></article>`;};
+zones.slice(2).forEach(zone=>$('feedsGrid').insertAdjacentHTML('beforeend',extraCameraMarkup(zone)));
+zones.forEach(zone=>{$('wrap'+zone).closest('article').dataset.zone=zone;});
+const historyA=[],historyB=[],streams=Object.fromEntries(zones.map(zone=>[zone,null])),urls=Object.fromEntries(zones.map(zone=>[zone,null]));
+const histories=Object.fromEntries(zones.map(zone=>[zone,[]]));
+const manualFeed=Object.fromEntries(zones.map(zone=>[zone,false])),streamReady=Object.fromEntries(zones.map(zone=>[zone,false])),calibrationPoints=Object.fromEntries(zones.map(zone=>[zone,[]])),zoneCalibrated=Object.fromEntries(zones.map(zone=>[zone,false]));
+let demoTimer=null,backendAvailable=false,polling=false,lastCounts={A:0,B:0,C:0,D:0,E:0,F:0},lastA=0,lastB=0,lastFps=0,lastDetectionFps=0,lastPreAlert=false,lastCrowdAlert=false,lastDataSourceReal=null;
+let alertAudioContext=null,soundAlertsEnabled=false;
+const streamEndpoints=Object.fromEntries(zones.map(zone=>[zone,`http://127.0.0.1:8000/stream/feed${feedForZone(zone)}`]));
+const statsEndpoint='http://127.0.0.1:8000/api/stats',HISTORY_WINDOW_MS=60000;
+
+function clock(){$('clock').textContent=new Date().toLocaleString([], {weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
+clock();setInterval(clock,1000);
+function log(title,detail){const row=document.createElement('div');row.className='alert-row';const b=document.createElement('b');b.textContent=title;const s=document.createElement('span');s.className='muted';s.textContent=detail;row.append(b,s);$('alerts').prepend(row);while($('alerts').children.length>4)$('alerts').lastChild.remove();}
+function playCrowdAlert(){if(!soundAlertsEnabled||!alertAudioContext||alertAudioContext.state!=='running')return;const start=alertAudioContext.currentTime;[660,880,1040].forEach((frequency,index)=>{const oscillator=alertAudioContext.createOscillator(),gain=alertAudioContext.createGain(),at=start+index*.17;oscillator.type='sine';oscillator.frequency.value=frequency;gain.gain.setValueAtTime(.0001,at);gain.gain.exponentialRampToValueAtTime(.08,at+.02);gain.gain.exponentialRampToValueAtTime(.0001,at+.15);oscillator.connect(gain);gain.connect(alertAudioContext.destination);oscillator.start(at);oscillator.stop(at+.16);});}
+$('soundAlertToggle').addEventListener('click',async()=>{const AudioContextType=window.AudioContext||window.webkitAudioContext;if(!AudioContextType){$('soundAlertState').textContent='Audio alerts are not supported in this browser.';return;}try{if(!alertAudioContext)alertAudioContext=new AudioContextType();await alertAudioContext.resume();soundAlertsEnabled=!soundAlertsEnabled;$('soundAlertToggle').setAttribute('aria-pressed',String(soundAlertsEnabled));$('soundAlertToggle').textContent=soundAlertsEnabled?'Disable sound alerts':'Enable sound alerts';$('soundAlertState').textContent=soundAlertsEnabled?'Sound enabled · test tone played; alerts sound on crowd increases.':'Sound alerts are off.';if(soundAlertsEnabled)playCrowdAlert();}catch(error){soundAlertsEnabled=false;$('soundAlertToggle').setAttribute('aria-pressed','false');$('soundAlertState').textContent='Could not enable sound: '+error.message;}});
+function syncDashboardFeeds(){const dashboardActive=$('dashboard').classList.contains('page-dashboard');document.querySelectorAll('#feedsGrid article[data-zone]').forEach(card=>{card.hidden=dashboardActive&&!dashboardSelection.includes(card.dataset.zone);});}
+function setDashboardFeed(slot,zone){const previous=dashboardSelection.slice();dashboardSelection[slot]=zone;if(dashboardSelection[1-slot]===zone)dashboardSelection[1-slot]=previous[slot];$('dashboardFeedA').value=dashboardSelection[0];$('dashboardFeedB').value=dashboardSelection[1];localStorage.setItem('crowdwatch.dashboardA',dashboardSelection[0]);localStorage.setItem('crowdwatch.dashboardB',dashboardSelection[1]);syncDashboardFeeds();updateDashboard(lastCounts,lastFps,backendAvailable,lastDetectionFps);}
+function showPage(page,updateHistory=true){const validPages=['home','dashboard','cameras','analytics','settings'];if(!validPages.includes(page))page='home';$('dashboard').className='main page-'+page;syncDashboardFeeds();document.querySelectorAll('.nav button[data-target]').forEach(button=>{const active=button.dataset.target===page;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});if(updateHistory)history.pushState({page},'',page==='home'?location.pathname:'#'+page);window.scrollTo({top:0,behavior:'smooth'});}
+$('dashboardFeedA').addEventListener('change',event=>setDashboardFeed(0,event.target.value));
+$('dashboardFeedB').addEventListener('change',event=>setDashboardFeed(1,event.target.value));
+document.querySelectorAll('.nav button[data-target]').forEach(button=>button.addEventListener('click',()=>{if(button.dataset.target==='home'){location.href='landing.html';return;}showPage(button.dataset.target);}));
+window.addEventListener('popstate',()=>showPage(location.hash.slice(1)||'home',false));if(location.hash)showPage(location.hash.slice(1),false);else location.replace('landing.html');
+function streamConnected(zone){streamReady[zone]=true;if(manualFeed[zone])return;$('stream'+zone).style.display='block';$('placeholder'+zone).style.display='none';$('label'+zone).textContent='MJPEG CONNECTED · CHECKING SOURCE';}
+function streamFailed(zone){streamReady[zone]=false;if(manualFeed[zone])return;$('stream'+zone).style.display='none';$('placeholder'+zone).style.display='grid';$('placeholder'+zone).querySelector('strong').textContent=backendAvailable?'Live video unavailable':'Simulation fallback active';$('placeholder'+zone).querySelector('span').textContent=backendAvailable?'Telemetry is connected; retrying the stream.':'Backend offline. Showing simulated crowd telemetry.';$('label'+zone).textContent=backendAvailable?'VIDEO UNAVAILABLE · TELEMETRY LIVE':'SIMULATION · BACKEND OFFLINE';if(!backendAvailable)$('fps'+zone).textContent='SIM MODE';}
+function refreshStream(zone){if(manualFeed[zone])return;streamReady[zone]=false;$('stream'+zone).style.display='block';$('stream'+zone).src=streamEndpoints[zone]+'?refresh='+Date.now();}
+function attachVideo(zone,src){manualFeed[zone]=true;$('stream'+zone).removeAttribute('src');const v=$('video'+zone);v.style.display='block';v.srcObject=null;v.src=src;v.loop=true;v.play().catch(()=>{});$('placeholder'+zone).style.display='none';$('label'+zone).textContent='LOCAL VIDEO · SIMULATED TELEMETRY';$('fps'+zone).textContent='SIM MODE';log('Camera '+zone+' connected','Using local video with simulated telemetry.');startDemo();}
+const calibrationMode=Object.fromEntries(zones.map(zone=>[zone,null])),dragOrigins=Object.fromEntries(zones.map(zone=>[zone,null]));
+function framePoint(event,layer){const rect=layer.getBoundingClientRect();return[Math.max(0,Math.min(639,Math.round((event.clientX-rect.left)/rect.width*640))),Math.max(0,Math.min(359,Math.round((event.clientY-rect.top)/rect.height*360)))];}
+function drawRoi(zone,points){$('roiPolygon'+zone).setAttribute('points',points.map(point=>point.join(',')).join(' '));const markers=$('roiMarkers'+zone);markers.replaceChildren();points.forEach(([x,y])=>{const marker=document.createElementNS('http://www.w3.org/2000/svg','circle');marker.setAttribute('cx',x);marker.setAttribute('cy',y);marker.setAttribute('r','5');markers.append(marker);});}
+function startZoneCalibration(zone,mode='rect'){if(!backendAvailable){$('calibrationStatus'+zone).textContent='Backend offline · start the backend to save an area';return;}calibrationMode[zone]=mode;calibrationPoints[zone]=[];dragOrigins[zone]=null;drawRoi(zone,[]);$('roiPreview'+zone).style.display='none';$('roiLayer'+zone).classList.add('selecting');$('wrap'+zone).classList.add('calibrating');$('calibrationStatus'+zone).textContent=mode==='rect'?'Drag a box over the footage':'Click four zone corners clockwise';$('label'+zone).textContent=mode==='rect'?'DRAG TO SELECT TRACKING AREA':'CLICK FOUR ROI CORNERS';}
+async function saveZoneCalibration(zone,points){calibrationMode[zone]=null;$('roiLayer'+zone).classList.remove('selecting');$('wrap'+zone).classList.remove('calibrating');$('roiPreview'+zone).style.display='none';calibrationPoints[zone]=points;drawRoi(zone,points);const area=areaValues()[zone];$('calibrationStatus'+zone).textContent='Saving selected area...';try{const response=await fetch('http://127.0.0.1:8000/api/calibrate-zone',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feed:feedForZone(zone),area_m2:area,points})});const result=await response.json();if(!response.ok)throw new Error(result.detail||'Request failed with HTTP '+response.status);zoneCalibrated[zone]=true;$('calibrationStatus'+zone).textContent='Tracking area active · '+result.area_m2+' m²';$('label'+zone).textContent='LIVE · AREA TRACKING';log('Tracking area saved · '+cameraNames[zone],area+' m²; detections are filtered to the selected region.');}catch(error){$('calibrationStatus'+zone).textContent='Could not save area · '+error.message;log('Area selection failed',error.message);}}
+function startZoneDrawing(zone,event){const mode=calibrationMode[zone];if(!mode)return;const layer=$('roiLayer'+zone),point=framePoint(event,layer);event.preventDefault();layer.setPointerCapture(event.pointerId);if(mode==='rect'){dragOrigins[zone]=point;$('roiPreview'+zone).setAttribute('x',point[0]);$('roiPreview'+zone).setAttribute('y',point[1]);$('roiPreview'+zone).setAttribute('width','0');$('roiPreview'+zone).setAttribute('height','0');$('roiPreview'+zone).style.display='block';drawRoi(zone,[point]);}else{calibrationPoints[zone].push(point);drawRoi(zone,calibrationPoints[zone]);$('calibrationStatus'+zone).textContent='Polygon corner '+calibrationPoints[zone].length+' of 4';if(calibrationPoints[zone].length===4)saveZoneCalibration(zone,calibrationPoints[zone]);}}
+function moveZoneDrawing(zone,event){if(calibrationMode[zone]!=='rect'||!dragOrigins[zone])return;const [startX,startY]=dragOrigins[zone],point=framePoint(event,$('roiLayer'+zone)),x=Math.min(startX,point[0]),y=Math.min(startY,point[1]),width=Math.abs(point[0]-startX),height=Math.abs(point[1]-startY);$('roiPreview'+zone).setAttribute('x',x);$('roiPreview'+zone).setAttribute('y',y);$('roiPreview'+zone).setAttribute('width',width);$('roiPreview'+zone).setAttribute('height',height);drawRoi(zone,[[x,y],[x+width,y],[x+width,y+height],[x,y+height]]);}
+function finishZoneDrawing(zone,event){if(calibrationMode[zone]!=='rect'||!dragOrigins[zone])return;moveZoneDrawing(zone,event);const [startX,startY]=dragOrigins[zone],point=framePoint(event,$('roiLayer'+zone)),left=Math.min(startX,point[0]),top=Math.min(startY,point[1]),right=Math.max(startX,point[0]),bottom=Math.max(startY,point[1]);dragOrigins[zone]=null;if(right-left<8||bottom-top<8){$('roiPreview'+zone).style.display='none';$('calibrationStatus'+zone).textContent='Area too small · drag a larger region';return;}saveZoneCalibration(zone,[[left,top],[right,top],[right,bottom],[left,bottom]]);}
+zones.forEach(zone=>{const layer=$('roiLayer'+zone);layer.addEventListener('pointerdown',event=>startZoneDrawing(zone,event));layer.addEventListener('pointermove',event=>moveZoneDrawing(zone,event));layer.addEventListener('pointerup',event=>finishZoneDrawing(zone,event));layer.addEventListener('pointercancel',()=>{dragOrigins[zone]=null;});});
+async function clearZoneCalibration(zone){try{const response=await fetch('http://127.0.0.1:8000/api/calibrate-zone/'+feedForZone(zone),{method:'DELETE'}),result=await response.json();if(!response.ok)throw new Error(result.detail||'Request failed with HTTP '+response.status);calibrationMode[zone]=null;calibrationPoints[zone]=[];zoneCalibrated[zone]=false;$('roiLayer'+zone).classList.remove('selecting');$('wrap'+zone).classList.remove('calibrating');$('roiPolygon'+zone).setAttribute('points','');$('roiMarkers'+zone).replaceChildren();$('roiPreview'+zone).style.display='none';$('calibrationStatus'+zone).textContent='No area selected · full-frame counting';updateDashboard(lastCounts,lastFps,backendAvailable,lastDetectionFps);log('Tracking area cleared',cameraNames[zone]+' now counts the full frame.');}catch(error){$('calibrationStatus'+zone).textContent='Could not clear area · '+error.message;log('Could not clear area',error.message);}}
+async function loadZoneCalibrations(){try{const response=await fetch('http://127.0.0.1:8000/api/calibrations',{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const result=await response.json();zones.forEach(zone=>{const calibration=result.feeds[String(feedForZone(zone))];$('area'+zone).value=calibration.area_m2;$('areaHud'+zone).textContent=calibration.area_m2+' m²';if(calibration.points){zoneCalibrated[zone]=true;calibrationPoints[zone]=calibration.points;drawRoi(zone,calibration.points);$('calibrationStatus'+zone).textContent='Tracking area active · '+calibration.area_m2+' m²';}else{$('calibrationStatus'+zone).textContent='No area selected · full-frame counting';}});}catch(error){zones.forEach(zone=>$('calibrationStatus'+zone).textContent='Area settings unavailable · '+error.message);}}
+zones.forEach(z=>$('file'+z).addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;if(urls[z])URL.revokeObjectURL(urls[z]);urls[z]=URL.createObjectURL(f);attachVideo(z,urls[z]);}));
+async function startCamera(z){try{if(streams[z])streams[z].getTracks().forEach(t=>t.stop());manualFeed[z]=true;$('stream'+z).removeAttribute('src');$('video'+z).style.display='block';streams[z]=await navigator.mediaDevices.getUserMedia({video:true,audio:false});const v=$('video'+z);v.src='';v.srcObject=streams[z];await v.play();$('placeholder'+z).style.display='none';$('label'+z).textContent='LOCAL WEBCAM · SIMULATED TELEMETRY';$('fps'+z).textContent='SIM MODE';log('Webcam '+z+' connected','Live webcam is displayed with simulated telemetry.');startDemo();}catch(e){manualFeed[z]=false;log('Camera unavailable',e.message||'Allow camera access or upload a video.');refreshStream(z);}}
+function stopFeed(z){if(streams[z])streams[z].getTracks().forEach(t=>t.stop());streams[z]=null;manualFeed[z]=false;const v=$('video'+z);v.pause();v.style.display='none';v.srcObject=null;v.removeAttribute('src');v.load();$('placeholder'+z).style.display='grid';$('placeholder'+z).querySelector('strong').textContent='Connecting to detection backend';$('placeholder'+z).querySelector('span').textContent='Waiting for live frames or simulation fallback...';$('label'+z).textContent='Connecting to backend';refreshStream(z);log('Camera '+z+' reset','Returning to the configured backend stream.');}
+function startDemo(){if(!demoTimer)demoTimer=setInterval(tick,1000);tick();}
+function areaValues(){return Object.fromEntries(zones.map(zone=>[zone,Math.max(1,+$('area'+zone).value||defaultAreas[zone])]));}
+function movingAverage(values,size){const slice=values.slice(-size);return slice.length?slice.reduce((sum,n)=>sum+n,0)/slice.length:0;}
+function recordSample(samples,value,now){samples.push({t:now,v:value});while(samples.length&&now-samples[0].t>HISTORY_WINDOW_MS)samples.shift();}
+function smoothedSamples(samples){return samples.map((sample,index)=>({t:sample.t,v:movingAverage(samples.slice(Math.max(0,index-4),index+1).map(item=>item.v),5)}));}
+function predictCount(samples,horizon){if(samples.length<60||samples[samples.length-1].t-samples[0].t<30000)return{value:samples.length?samples[samples.length-1].v:0,slope:0};const smooth=smoothedSamples(samples),origin=smooth[smooth.length-1].t,points=smooth.map(item=>({x:(item.t-origin)/1000,y:item.v})),meanX=points.reduce((sum,p)=>sum+p.x,0)/points.length,meanY=points.reduce((sum,p)=>sum+p.y,0)/points.length,denominator=points.reduce((sum,p)=>sum+(p.x-meanX)**2,0),slope=denominator?points.reduce((sum,p)=>sum+(p.x-meanX)*(p.y-meanY),0)/denominator:0;return{value:Math.max(0,smooth[smooth.length-1].v+slope*horizon/1000),slope};}
+function chartPoints(samples,limit,now){const yFor=n=>Math.max(20,165-Math.max(0,n)/limit*130),start=now-HISTORY_WINDOW_MS;return samples.map(sample=>[35+Math.max(0,Math.min(1,(sample.t-start)/HISTORY_WINDOW_MS))*530,yFor(sample.v)]);}
+function drawTrend(limit,now,predictionA,predictionB){const samplesA=histories[dashboardSelection[0]],samplesB=histories[dashboardSelection[1]],pointsA=chartPoints(smoothedSamples(samplesA),limit,now),pointsB=chartPoints(smoothedSamples(samplesB),limit,now),path=points=>points.map((point,index)=>(index?'L':'M')+point[0]+' '+point[1]).join(' '),forecast=(points,prediction)=>{if(!points.length)return'';const last=points[points.length-1],targetY=Math.max(20,165-Math.max(0,prediction)/limit*130);return'M'+last[0]+' '+last[1]+' L590 '+targetY;};$('lineA').setAttribute('d',pointsA.length?path(pointsA):'M35 165 L590 165');$('lineB').setAttribute('d',pointsB.length?path(pointsB):'M35 165 L590 165');$('areaA').setAttribute('d',pointsA.length?path(pointsA)+' L'+pointsA[pointsA.length-1][0]+' 165 L'+pointsA[0][0]+' 165Z':'');$('forecastA').setAttribute('d',forecast(pointsA,predictionA));$('forecastB').setAttribute('d',forecast(pointsB,predictionB));const combined=samplesA.map((sample,index)=>({t:sample.t,v:sample.v+(samplesB[index]?samplesB[index].v:0)})),smoothCombined=smoothedSamples(combined),maxCombined=Math.max(1,...smoothCombined.map(item=>item.v)),mini=smoothCombined.map((sample,index)=>(index?'L':'M')+(index*260/Math.max(1,smoothCombined.length-1))+' '+(65-Math.min(60,sample.v/maxCombined*60)));$('trendPath').setAttribute('d',mini.length?mini.join(' '):'M0 60 L260 60');}
+function updateDashboard(counts,fps,isReal,detectionFps=0){
+ if(typeof counts!=='object'||counts===null)counts={A:Number(counts)||0,B:Number(fps)||0,C:0,D:0,E:0,F:0},fps=arguments[2],isReal=arguments[3],detectionFps=arguments[4]||0;
+ if(lastDataSourceReal!==null&&lastDataSourceReal!==isReal){zones.forEach(zone=>histories[zone].splice(0));historyA.length=0;historyB.length=0;lastPreAlert=false;lastCrowdAlert=false;}lastDataSourceReal=isReal;
+ lastCounts=Object.fromEntries(zones.map(zone=>[zone,Math.max(0,Number(counts[zone])||0)]));lastA=lastCounts.A;lastB=lastCounts.B;lastFps=Number(fps)||0;lastDetectionFps=Number(detectionFps)||0;
+ const now=Date.now(),areas=areaValues(),limit=Math.max(1,+$('limit').value||900),densityThreshold=Math.max(.1,+$('densityThreshold').value||1.5),horizon=Math.max(1,Math.min(10,+$('forecastMinutes').value||3))*60000;
+ zones.forEach(zone=>recordSample(histories[zone],lastCounts[zone],now));recordSample(historyA,lastCounts.A,now);recordSample(historyB,lastCounts.B,now);
+ const projections=Object.fromEntries(zones.map(zone=>[zone,predictCount(histories[zone],horizon)]));
+ const current=zones.map(zone=>({zone,count:lastCounts[zone],density:lastCounts[zone]/areas[zone],forecast:projections[zone].value/areas[zone],slope:projections[zone].slope}));
+ const peakCurrent=current.reduce((best,item)=>item.density>best.density?item:best,current[0]),peakForecast=current.reduce((best,item)=>item.forecast>best.forecast?item:best,current[0]);
+ const load=Math.max(...current.map(item=>item.count))/limit*100,preAlert=current.some(item=>item.density>=densityThreshold||item.forecast>=densityThreshold),status=load>=90?'Critical':load>=75||preAlert?'Warning':'Normal',rising=current.some(item=>item.slope>.05),total=zones.reduce((sum,zone)=>sum+lastCounts[zone],0);
+ const selectedA=current.find(item=>item.zone===dashboardSelection[0]),selectedB=current.find(item=>item.zone===dashboardSelection[1]);
+ $('countA').textContent=selectedA.count;$('countB').textContent=selectedB.count;$('countA').parentElement.querySelector('small').textContent='Total people · '+cameraNames[selectedA.zone];$('countB').parentElement.querySelector('small').textContent='Total people · '+cameraNames[selectedB.zone];$('analysisCountA').textContent=total;$('analysisCountB').textContent=peakCurrent.density.toFixed(2)+' p/m²';$('analysisCountB').previousElementSibling.textContent='Peak density · '+cameraNames[peakCurrent.zone];$('analysisDetectorFps').textContent=lastDetectionFps.toFixed(1)+' FPS';$('analysisOutputFps').textContent=lastFps.toFixed(1)+' FPS';$('analysisSourceNote').textContent=isReal?'Backend counts from six feeds · '+(backendAvailable?'connected':'connecting')+' · density uses entered zone area. Track IDs may switch under occlusion; forecasts are trend estimates.':'Simulation telemetry only · connect camera sources for actual detections.';
+ $('densityA').textContent=selectedA.density.toFixed(2);$('densityA').parentElement.querySelector('small').textContent='Density · '+cameraNames[selectedA.zone];$('changeA').textContent=isReal?'Person tracking · live':'Simulation estimate · updating';$('changeB').textContent=isReal?'Person tracking · live':'Simulation estimate · updating';$('trendLegend').textContent=cameraNames[selectedA.zone]+' · '+cameraNames[selectedB.zone]+' · '+Math.round(horizon/60000)+' min forecast';
+ zones.forEach(zone=>{const row=current[zones.indexOf(zone)];$('areaHud'+zone).textContent=areas[zone]+' m²';$('countHud'+zone).textContent=lastCounts[zone];$('densityHud'+zone).textContent=row.density.toFixed(2)+' p/m²';$('fps'+zone).textContent=isReal?lastFps.toFixed(1)+' FPS':'SIM MODE';});
+ $('footerFps').textContent=lastFps.toFixed(1);$('footerDetectionFps').textContent=lastDetectionFps.toFixed(1);
+ $('analysisRows').innerHTML=current.map(item=>`<tr><td>${cameraNames[item.zone]}</td><td>${areas[item.zone]}</td><td>${item.count}</td><td>${item.density.toFixed(2)}</td><td>${item.slope>.05?'Rising':item.slope<-.05?'Falling':'Stable'}</td><td>${Math.round(predictCount(histories[item.zone],300000).value)}</td><td>${Math.round(predictCount(histories[item.zone],600000).value)}</td></tr>`).join('');
+ $('overall').textContent=status==='Normal'?(rising?'Rising':'Normal'):preAlert&&load<75?'Pre-Alert':status;$('statusFoot').textContent=preAlert?'Current or forecast density: '+densityThreshold.toFixed(1)+' people/m²':rising?'Recent crowd increase detected':load>=75?'Configured crowd limit approaching':'Threshold: '+limit+' people';$('safeBox').className='safe'+(status==='Critical'?' danger':status==='Warning'||rising?' warn':'');$('safeIcon').textContent=status==='Critical'||status==='Warning'||rising?'!':'✓';$('safeTitle').textContent=status==='Critical'?'High crowd load':preAlert?'Crowd pre-alert':rising||status==='Warning'?'Crowd rising':'Within safe range';$('safeText').textContent=status==='Critical'?'Move volunteers to '+cameraNames[peakCurrent.zone]+' now.':preAlert?'Current or predicted density reaches '+densityThreshold.toFixed(1)+' people per m². Prepare volunteers at '+cameraNames[peakForecast.zone]+'.':rising?'Recent counts are increasing at '+cameraNames[peakForecast.zone]+'. Check this zone and prepare volunteers.':status==='Warning'?'Prepare to redirect incoming footfall.':'No immediate action required.';
+ $('trendText').textContent=preAlert?Math.round(horizon/60000)+'-minute forecast: '+peakForecast.forecast.toFixed(2)+' people/m² at '+cameraNames[peakForecast.zone]+'.':rising?'Recent counts are rising; estimated peak is '+peakForecast.forecast.toFixed(2)+' people/m² in '+Math.round(horizon/60000)+' min.':'Estimated peak in '+Math.round(horizon/60000)+' min: '+peakForecast.forecast.toFixed(2)+' people/m². Estimates use recent trend.';
+ $('loadPct').textContent=Math.min(100,Math.round(load))+'%';$('ring').style.background=`conic-gradient(${load>=90?'#ef5350':load>=75||preAlert?'#f59e0b':'#14bd91'} 0 ${Math.min(100,load)}%,#e8edf2 ${Math.min(100,load)}% 100%)`;$('loadLabel').textContent=Math.round(load)+'% of configured per-zone limit';$('loadDescription').textContent='Peak: '+cameraNames[peakCurrent.zone]+' · '+peakCurrent.count+' people · '+peakCurrent.density.toFixed(2)+' p/m² · '+total+' people summed across views (not unique people).';
+ const banner=$('alertBanner');banner.hidden=status==='Normal'&&!rising;banner.className='alert-banner'+(status==='Critical'?' critical':'');$('alertTitle').textContent=status==='Critical'?'Critical crowd level · ':preAlert?'Crowd pre-alert · ':rising?'Crowd increasing · ':'Rising crowd trend · ';$('alertDetail').textContent=preAlert?cameraNames[peakForecast.zone]+' is '+peakCurrent.density.toFixed(2)+' p/m² now; trend estimate is '+peakForecast.forecast.toFixed(2)+' p/m² in '+Math.round(horizon/60000)+' minutes. Prepare volunteers.':rising?'Recent counts are increasing at '+cameraNames[peakForecast.zone]+'. Check that zone and prepare volunteers.':'Recent counts are trending upward at '+cameraNames[peakForecast.zone]+'. Check that zone.';
+ drawTrend(limit,now,projections[selectedA.zone].value,projections[selectedB.zone].value);const crowdAlert=preAlert||rising;if(crowdAlert&&!lastCrowdAlert){if(!preAlert)log('Crowd increasing · '+cameraNames[peakForecast.zone],'Recent counts are rising. Check this camera and prepare volunteers.');playCrowdAlert();}if(preAlert&&!lastPreAlert)log('Pre-Alert · '+cameraNames[peakForecast.zone],'Current or projected density reaches '+densityThreshold.toFixed(1)+' people per m².');else if(status==='Critical'&&Math.floor(now/5000)!==window.lastAlert){window.lastAlert=Math.floor(now/5000);log('Critical · '+cameraNames[peakCurrent.zone],'Configured crowd limit reached. Move volunteers to this zone.');}lastCrowdAlert=crowdAlert;lastPreAlert=preAlert;
+}
+function tick(){if(backendAvailable)return;const now=Date.now(),counts={};zones.forEach((zone,index)=>{const base=[105,82,40,52,36,64][index];counts[zone]=Math.max(0,Math.round(base+Math.sin(now/(900+index*150))*18+(Math.random()-.45)*12));});updateDashboard(counts,0,false);}
+async function pollStats(){
+ if(polling)return;polling=true;
+ try{
+  const response=await fetch(statsEndpoint,{cache:'no-store'});
+  if(!response.ok)throw new Error('Backend returned HTTP '+response.status);
+  const stats=await response.json(),wasAvailable=backendAvailable;
+  backendAvailable=true;
+  if(!wasAvailable){zones.forEach(zone=>histories[zone].splice(0));historyA.length=0;historyB.length=0;lastPreAlert=false;lastCrowdAlert=false;loadZoneCalibrations();}
+  $('backendStatus').textContent=stats.status==='LIVE'?'YOLOv8 · six feeds LIVE':'YOLOv8 · FALLBACK source';
+  $('backendStatus').style.color=stats.status==='LIVE'?'var(--green)':'var(--amber)';
+  zones.forEach((zone,index)=>{
+   const feed=index+1,notice=$('sourceNotice'+zone),feedLive=typeof stats[`feed${feed}_live`]==='boolean'?stats[`feed${feed}_live`]:stats.status==='LIVE';
+   if(notice)notice.textContent=feed>1&&stats[`feed${feed}_shared_source`]?'Mirroring Feed 1 · add a unique stream in Settings for a separate angle.':'';
+   if(!manualFeed[zone]&&streamReady[zone])$('label'+zone).textContent=feedLive?'LIVE · YOLOv8 PERSON DETECTION':'FALLBACK SOURCE · LIVE CAMERA UNAVAILABLE';
+   if(!manualFeed[zone]&&!streamReady[zone])$('placeholder'+zone).querySelector('span').textContent=feedLive?'Waiting for the first processed frame...':'Backend connected; using its configured live or synthetic fallback.';
+  });
+  $('sourceNotice').textContent=stats.feed2_shared_source?'Feed 2 mirrors Feed 1; configure an independent stream in Settings.':'';
+  $('homeZoneCount').textContent='6 camera angles';
+  const counts=Object.fromEntries(zones.map((zone,index)=>[zone,Number(stats[`feed${index+1}_count`])||0]));
+  updateDashboard(counts,Number(stats.fps)||0,true,Number(stats.detection_fps)||0);
+ }catch(error){
+  backendAvailable=false;
+  $('backendStatus').textContent='Backend offline · simulation';
+  $('backendStatus').style.color='var(--amber)';
+  $('sourceNotice').textContent='Backend offline · source status unavailable.';
+  $('homeZoneCount').textContent='Backend connecting';
+  zones.forEach(streamFailed);
+ }finally{polling=false;}
+}
+setInterval(pollStats,500);pollStats();
+setInterval(()=>{zones.forEach(z=>{if(!manualFeed[z]&&!streamReady[z])refreshStream(z);});},5000);
+zones.map(zone=>'area'+zone).concat(['limit','densityThreshold','forecastMinutes']).forEach(id=>$(id).addEventListener('input',()=>updateDashboard(lastCounts,lastFps,backendAvailable,lastDetectionFps)));
+$('streamForm').addEventListener('submit',async e=>{e.preventDefault();const message=$('streamMessage');message.textContent='Updating stream...';try{const response=await fetch('http://127.0.0.1:8000/api/update-stream',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({feed:Number($('streamFeed').value),url:$('streamUrl').value.trim()})});const result=await response.json();if(!response.ok)throw new Error(result.detail||'Request failed with HTTP '+response.status);message.textContent='Feed '+result.feed+' updated. The backend is reconnecting to the new source.';$('streamUrl').value='';log('Stream source updated','Feed '+result.feed+' is reconnecting.');}catch(error){message.textContent='Could not update stream: '+error.message;}});
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}}),{threshold:.18});document.querySelectorAll('.home-feature').forEach(card=>revealObserver.observe(card));let scrollFrame=0;window.addEventListener('scroll',()=>{if(scrollFrame)return;scrollFrame=requestAnimationFrame(()=>{const preview=document.querySelector('.hero-preview');if(preview&&$('dashboard').classList.contains('page-home'))preview.style.transform=`translateY(${Math.min(32,window.scrollY*.08)}px) rotate(${1-window.scrollY*.003}deg)`;scrollFrame=0;});},{passive:true});}else document.querySelectorAll('.home-feature').forEach(card=>card.classList.add('revealed'));
+startDemo();
+</script></body></html>

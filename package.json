@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev.mjs"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
